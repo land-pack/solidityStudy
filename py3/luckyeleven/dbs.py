@@ -77,7 +77,20 @@ class Luckyeleven(DBS):
             self.db.commit()
 
 
-
+    def fetch_place(self, filer_by_status=0, filer_by_day=7):
+        sql = """
+            SELECT f_user_addr as user_addr, f_expect_id as expect_id, f_lucky_num as lucky_num,
+            f_digit_curreny as curreny, f_result as result, f_trade_addr as trade_addr
+            FROM t_trade
+            WHERE f_status=%s AND  datediff(current_date(), f_create_time) < %s;
+        """
+        try:
+            self.cursor.execute(sql, (filer_by_status, filer_by_day))
+            data = self.cursor.fetchall()
+        except:
+            raise
+        else:
+            return data
 
 
 if __name__ == '__main__':
@@ -97,3 +110,5 @@ if __name__ == '__main__':
                 0.00021, 0, 0,
                 '012akmsdl3l2m2mm2m2l2m2')
 
+    with Luckyeleven() as dbs:
+        print list(dbs.fetch_place())
