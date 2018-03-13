@@ -8,6 +8,9 @@ import tornado.gen
 import tornadoredis
 import ujson
 
+
+from dbs import Luckyeleven
+
 c = tornadoredis.Client()
 c.connect()
 
@@ -29,18 +32,37 @@ class PlaceApiHandler(tornado.web.RequestHandler):
 
     def post(self):
         """
+        [{
+            "user_addr": "0x627306090abab3a6e1400e9345bc60c78a8bef57",
+            "expect_id": "1803120252",
+            "lucky_num": "02|03|05|08|09",
+            "digit_curreny": "0.000221"
+        },
         {
-            "user_addr": "0x88282",
-            "expect_id": "0xsankns",
-            "lucky_num": "02|12|22",
-            "digit_curreny": "jacj"
-        }
+            "user_addr": "0x627306090abab3a6e1400e9345bc60c78a8bef57",
+            "expect_id": "1803120252",
+            "lucky_num": "02|03|05|08|09",
+            "digit_curreny": "0.000221"
+        }]
         """
         message = self.get_argument("message")
         data = ujson.loads(message)
         print(data)
         print(type(data))
+        # RPC 
+        for i in data:
+            with Luckyeleven() as db:
+                print('i --{}'.format(i))
+                db.place(i.get("user_addr"),
+                         i.get("expect_id"),
+                         i.get("lucky_num"),
+                         i.get("digit_curreny"),
+                         0,
+                         0,
+                         '0x')
+        #
         self.write("place ok")
+
 
 
 class MessageHandler(tornado.websocket.WebSocketHandler):

@@ -1,7 +1,7 @@
 #!/usr/bin/python
 
+import traceback
 import MySQLdb
-
 
 class DBS(object):
 
@@ -74,7 +74,9 @@ class Luckyeleven(DBS):
             self.db.commit()
         except:
             # Rollback  in case there is any error
-            self.db.commit()
+            self.db.rollback()
+            print (traceback.format_exc())
+            raise
 
 
     def fetch_place(self, filer_by_status=0, filer_by_day=7):
