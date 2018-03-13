@@ -9,8 +9,17 @@ addr = '0x9548bd8b13ceff478f16d206a4752f23579d7ac6'
 
 contract = w3.eth.contract(abi=abi, address=addr)
 
+#print(dir(contract))
+
+#contract.placeOrder('Nihao', transact={'from': w3.eth.accounts[0]})
+
+#print(w3.eth.blockNumber)
+#print(contract)
 
 
-print(w3.eth.blockNumber)
-print(contract)
+def unlock(w3):
+    w3.personal.unlockAccount(w3.eth.accounts[0], passphrase='123456')
+    return True
 
+
+print(unlock(w3))

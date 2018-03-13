@@ -37,7 +37,7 @@ contract_interface = compiled_sol['<stdin>:Greeter']
 # web3.py instance
 #w3 = Web3(TestRPCProvider())
 #w3 = Web3(HTTPProvider('http://192.168.12.34:8545'))
-w3 = Web3(TestTRPCProvider('http://localhost:9545'))
+#w3 = Web3(TestTRPCProvider('http://localhost:9545'))
 
 # Instantiate and deploy contract
 contract = w3.eth.contract(abi=contract_interface['abi'], bytecode=contract_interface['bin'])
