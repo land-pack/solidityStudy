@@ -3,7 +3,7 @@ import json
 from web3 import Web3, HTTPProvider, IPCProvider, RPCProvider
 from web3.contract import ConciseContract
 
-from abi import abi as abi_conf
+from pysol.abi import abi as abi_conf
 abi_conf = json.loads(abi_conf)
 
 w3 = Web3(HTTPProvider('http://192.168.12.34:9585'))
@@ -17,16 +17,24 @@ def unlock(w3):
     return True
 unlock(w3)
 
-def place():
-
-    ret = contract.transact(
-    {'from': w3.eth.accounts[0], 'gas': 41000, 'value': 12}
-    ).placeOrder('1803120252', [1,2,3,4,5])
-    return ret
+def place(addr, value, expectid, number, gas=40000000 ):
+    """
+    user address
+    value is eth number
+    expect id
+    number is your lucky number
+    gas default setting
+    """
     
-#print(contract.call().searchBalance())
+    ret = contract.transact(
+            {   'from': w3.eth.accounts[0], 
+                'gas': 41000, 
+                'value': 12
+            }).placeOrder(
+            '1803120252', 
+            [1,2,3,4,5])
+    return ret
 
 
-print(place())
-
-
+if __name__ == '__main__':
+    pass

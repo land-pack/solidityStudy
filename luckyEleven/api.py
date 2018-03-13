@@ -10,6 +10,8 @@ import ujson
 
 
 from dbs import Luckyeleven
+from pysol import rpc
+
 
 c = tornadoredis.Client()
 c.connect()
@@ -61,7 +63,13 @@ class PlaceApiHandler(tornado.web.RequestHandler):
                          0,
                          '0x')
         #
-        self.write("place ok")
+        tx = rpc.place(
+            'xx',
+            2,
+            123,
+            33,
+        )
+        self.write("place transacrion >>{}".format(tx))
 
 
 

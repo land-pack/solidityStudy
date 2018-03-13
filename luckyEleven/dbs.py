@@ -1,23 +1,30 @@
 #!/usr/bin/python
 
 import traceback
-import MySQLdb
+
+try:
+    import MySQLdb  as DBMS
+except:
+    import _mysql as DBMS
+
 
 class DBS(object):
 
     def __enter__(self):
         # Open database connection
-        self.db = MySQLdb.connect("localhost",
+        self.db = DBMS.connect("localhost",
                                 "root",
                                 "openmysql",
                                 "test")
+
+
         # Prepare a cursor object using cursor() method
         self.cursor = self.db.cursor()
         return self
 
 
     def __exit__(self, exception_type, exception_value, traceback):
-        print 'Close database connection'
+        print('Close database connection')
         # disconnect from server
         self.db.close()
 
@@ -75,7 +82,7 @@ class Luckyeleven(DBS):
         except:
             # Rollback  in case there is any error
             self.db.rollback()
-            print (traceback.format_exc())
+            print(traceback.format_exc())
             raise
 
 
@@ -98,7 +105,7 @@ class Luckyeleven(DBS):
 if __name__ == '__main__':
     
     with Luckyeleven() as dbs:
-        print dbs.fetch_version()
+        print(dbs.fetch_version())
 
 
     with Luckyeleven() as dbs:
@@ -113,4 +120,4 @@ if __name__ == '__main__':
                 '012akmsdl3l2m2mm2m2l2m2')
 
     with Luckyeleven() as dbs:
-        print list(dbs.fetch_place())
+        print(list(dbs.fetch_place()))
