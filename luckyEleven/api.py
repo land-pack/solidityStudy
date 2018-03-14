@@ -62,6 +62,7 @@ class PlaceApiHandler(tornado.web.RequestHandler):
                          0) # status
                 tx_lst.append(tx)
         self.write("place transacrion >>{}".format(tx_lst))
+        c.publish('test_channel', ujson.dumps(tx_lst))
 
 
 
