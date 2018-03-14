@@ -49,27 +49,19 @@ class PlaceApiHandler(tornado.web.RequestHandler):
         """
         message = self.get_argument("message")
         data = ujson.loads(message)
-        print(data)
-        print(type(data))
-        # RPC 
+        # RPC
+        tx_lst = []
         for i in data:
             with Luckyeleven() as db:
                 print('i --{}'.format(i))
-                db.place(i.get("user_addr"),
+                tx = db.place(i.get("user_addr"),
                          i.get("expect_id"),
                          i.get("lucky_num"),
                          i.get("digit_curreny"),
-                         0,
-                         0,
-                         '0x')
-        #
-        tx = rpc.place(
-            'xx',
-            2,
-            123,
-            33,
-        )
-        self.write("place transacrion >>{}".format(tx))
+                         0, # result
+                         0) # status
+                tx_lst.append(tx)
+        self.write("place transacrion >>{}".format(tx_lst))
 
 
 

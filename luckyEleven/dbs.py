@@ -7,6 +7,7 @@ try:
 except:
     import _mysql as DBMS
 
+from pysol import rpc
 
 class DBS(object):
 
@@ -67,7 +68,7 @@ class Luckyeleven(DBS):
 
        
     def place(self, f_user_addr, f_expect_id, f_lucky_num, f_digit_curreny,
-                f_result, f_status, f_trade_addr):
+                f_result, f_status):
         """
         if f_status is win and then read the `f_result` else just output `f_status`.
         """
@@ -76,15 +77,18 @@ class Luckyeleven(DBS):
             f_result, f_status, f_trade_addr)VALUE(%s, %s, %s, %s, %s, %s, %s)
         """
         try:
+            number = f_lucky_num.split('|')
+            tx = rpc.place(f_user_addr, f_digit_curreny, f_expect_id, number)
             self.cursor.execute(sql, (f_user_addr, f_expect_id, f_lucky_num,
-                f_digit_curreny, f_result, f_status, f_trade_addr))
+                f_digit_curreny, f_result, f_status, tx))
             self.db.commit()
         except:
             # Rollback  in case there is any error
             self.db.rollback()
             print(traceback.format_exc())
             raise
-
+        else:
+            return tx
 
     def fetch_place(self, filer_by_status=0, filer_by_day=7):
         sql = """
