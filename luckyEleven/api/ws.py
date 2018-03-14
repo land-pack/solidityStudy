@@ -39,9 +39,17 @@ class MessageHandler(tornado.websocket.WebSocketHandler):
         Check top 20 record, and write it back to client!
         """
         with Luckyeleven() as db:
-            data = db.top_20()
-            #self.write_message(ujson.dumps(lst_to_dict(data)))
-            self.write_message(ujson.dumps(data))
+            lst = db.top_20()
+
+            resp = {
+                "msg_type":"init",
+                "msg_code": 1001,
+                "data":{
+                    "top": lst
+                }
+            }
+            resp = ujson.dumps(resp)
+            self.write_message(resp)
 
     def on_message(self, msg):
         if msg.kind == 'message':
