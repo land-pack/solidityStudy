@@ -26,7 +26,8 @@ class CreateAccountHandler(tornado.web.RequestHandler):
         """
         {"passwd":123456}
         """
-        passwd = self.get_argument('passwd')
+        request_data = self.get_argument('request')
+        passwd = request_data.get("passwd")
         addr = wallet.create_account(str(passwd))
         self.set_header('Content-Type', 'text/plain')
         response = {

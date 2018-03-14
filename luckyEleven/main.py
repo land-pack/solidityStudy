@@ -15,7 +15,7 @@ from api.ws import MessageHandler
 
 application = tornado.web.Application([
     (r'/', MainHandler),
-    (r'/place', PlaceApiHandler),
+    (r'/order/place', PlaceApiHandler),
     (r'/msg', NewMessageHandler),
     (r'/ws/track', MessageHandler),
     (r'/account/create', CreateAccountHandler)

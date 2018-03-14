@@ -50,8 +50,13 @@ class PlaceApiHandler(tornado.web.RequestHandler):
             "digit_curreny": "1000"
         }]
         """
-        message = self.get_argument("message")
-        data = ujson.loads(message)
+        self.set_header('Content-Type', 'text/plain')
+        self.set_header("Access-Control-Allow-Origin", "*")
+        request_data  =  self.get_argument('request')
+        data = ujson.loads(request_data)
+        data= data.get("sendBetArr")
+        print("data type={}".format(type(data)))
+
         # RPC
         tx_lst = {}
         
@@ -75,7 +80,15 @@ class PlaceApiHandler(tornado.web.RequestHandler):
                     "prize_result": order_status,
                     "lucky_result": "" # if value is empty, you should ignore this
                 }
-        self.write("place transacrion >>{}".format(tx_lst))
+        resp = {
+                "status": 100,
+                "message":"ok",
+                "data":{
+                    "trade_lst": tx_lst
+                }
+
+        }
+        self.write(ujson.dumps(resp))
         c.publish('test_channel', ujson.dumps(tx_lst))
 
 

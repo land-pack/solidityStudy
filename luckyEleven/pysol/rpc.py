@@ -15,7 +15,7 @@ contract = w3.eth.contract(abi=abi_conf, address=addr)
 def unlock(w3):
     w3.personal.unlockAccount(w3.eth.accounts[0], passphrase='123456')
     return True
-unlock(w3)
+
 
 print("Current accounts={}".format(w3.eth.accounts[0]))
 
@@ -29,6 +29,7 @@ def place(addr=w3.eth.accounts[0], value=0, expectid='1803141010', number=[0,1,2
     @param number   : list  :   [1,2,3,4,5]
     @param gas      : int   :   4000000
     """
+    unlock(w3)
     number = [int(i) for i in number]
     value = int(value)
     #print("addr={} | value={} | expectid={} | number={} | gas={}".format(addr, value, expectid, number, gas))   
