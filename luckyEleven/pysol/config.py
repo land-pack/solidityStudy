@@ -1,3 +1,11 @@
+
+# Your Node IP/PORT
+host_address = 'http://192.168.12.34:9585'
+
+# Configuration yourself contract address
+contract_address =  '0x9548bd8b13ceff478f16d206a4752f23579d7ac6'
+
+# Your ABI configration
 abi = """
 [
     {
