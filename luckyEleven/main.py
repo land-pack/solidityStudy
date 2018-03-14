@@ -3,10 +3,10 @@ import tornado.httpserver
 import tornado.ioloop
 
 # Import API
-from api import MainHandler
-from api import PlaceApiHandler
-from api import NewMessageHandler
-from api import MessageHandler
+from api.order import MainHandler
+from api.order import PlaceApiHandler
+from api.order import NewMessageHandler
+from api.order import MessageHandler
 
 
 application = tornado.web.Application([

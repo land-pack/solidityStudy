@@ -12,7 +12,7 @@ import tornadoredis
 import ujson
 
 
-from dbs import Luckyeleven
+from model.order import Luckyeleven
 from pysol import rpc
 
 
