@@ -1,13 +1,13 @@
 from __future__ import print_function
+import sys
+sys.path.append("..")
 
 import datetime
-
 import tornado.httpserver
 import tornado.web
 import tornado.websocket
 import tornado.ioloop
 import tornado.gen
-
 import tornadoredis
 import ujson
 
@@ -110,15 +110,15 @@ class MessageHandler(tornado.websocket.WebSocketHandler):
     def check_origin(self, origin):
         return True
 
-application = tornado.web.Application([
-    (r'/', MainHandler),
-    (r'/place', PlaceApiHandler),
-    (r'/msg', NewMessageHandler),
-    (r'/track', MessageHandler),
-])
-
-if __name__ == '__main__':
-    http_server = tornado.httpserver.HTTPServer(application)
-    http_server.listen(8888)
-    print('Demo is runing at 0.0.0.0:8888\nQuit the demo with CONTROL-C')
-    tornado.ioloop.IOLoop.instance().start()
+##application = tornado.web.Application([
+##    (r'/', MainHandler),
+##    (r'/place', PlaceApiHandler),
+##    (r'/msg', NewMessageHandler),
+##    (r'/track', MessageHandler),
+##])
+##
+##if __name__ == '__main__':
+##    http_server = tornado.httpserver.HTTPServer(application)
+##    http_server.listen(8888)
+##    print('Demo is runing at 0.0.0.0:8888\nQuit the demo with CONTROL-C')
+##    tornado.ioloop.IOLoop.instance().start()

@@ -28,11 +28,9 @@ def place(addr=w3.eth.accounts[0], value=0, expectid='1803141010', number=[0,1,2
     @param number   : list  :   [1,2,3,4,5]
     @param gas      : int   :   4000000
     """
-    print("Origin number={} | type of number={}".format(number, type(number)))
     number = [int(i) for i in number]
-    value = float(value)
+    value = int(value)
     print("addr={} | value={} | expectid={} | number={} | gas={}".format(addr, value, expectid, number, gas))   
-    value = 2
     ret = contract.transact(
             {   'from': addr, 
                 'gas': gas, 
