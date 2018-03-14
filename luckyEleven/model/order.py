@@ -16,11 +16,13 @@ class DBS(object):
         self.db = DBMS.connect("localhost",
                                 "root",
                                 "openmysql",
-                                "test")
+                                "test"
+                                )
 
 
         # Prepare a cursor object using cursor() method
-        self.cursor = self.db.cursor()
+    
+        self.cursor = self.db.cursor(DBMS.cursors.DictCursor)
         return self
 
 
@@ -104,6 +106,24 @@ class Luckyeleven(DBS):
             raise
         else:
             return data
+    
+    def top_20(self):
+        sql = """
+            SELECT f_user_addr as user_addr, f_expect_id as expect_id, f_lucky_num as lucky_num,
+            f_digit_curreny as digit_curreny, f_result as prize_result, f_trade_addr as trade_addr,
+            f_lucky_result as lucky_result, f_create_time as place_time
+            FROM t_trade
+            ORDER BY f_create_time DESC 
+            LIMIT 20
+        """
+        try:
+            self.cursor.execute(sql)
+            data = self.cursor.fetchall()
+        except:
+            raise
+        else:
+            return data
+
 
 
 if __name__ == '__main__':

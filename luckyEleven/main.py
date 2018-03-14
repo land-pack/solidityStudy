@@ -6,14 +6,19 @@ import tornado.ioloop
 from api.order import MainHandler
 from api.order import PlaceApiHandler
 from api.order import NewMessageHandler
-from api.order import MessageHandler
 
+# For wallet
+from api.wallet import CreateAccountHandler
+
+# For WebSocket
+from api.ws import MessageHandler
 
 application = tornado.web.Application([
     (r'/', MainHandler),
     (r'/place', PlaceApiHandler),
     (r'/msg', NewMessageHandler),
-    (r'/track', MessageHandler),
+    (r'/ws/track', MessageHandler),
+    (r'/account/create', CreateAccountHandler)
 ])
 
 if __name__ == '__main__':
