@@ -3,9 +3,13 @@ import json
 from web3 import Web3, HTTPProvider, IPCProvider, RPCProvider
 from web3.contract import ConciseContract
 
-from pysol.config import host_address
-from pysol.config import abi as abi_conf
-from pysol.config import contract_address as addr
+#from pysol.config import host_address
+#from pysol.config import abi as abi_conf
+#from pysol.config import contract_address as addra
+
+from config.basic import host_address
+from config.basic import abi as abi_conf
+from config.basic import contract_address as addr
 
 abi_conf = json.loads(abi_conf)
 w3 = Web3(HTTPProvider(host_address))

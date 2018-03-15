@@ -12,7 +12,7 @@
 
 from web3 import Web3, HTTPProvider
 
-from pysol.config import host_address
+from config.basic import host_address
 
 web3 = Web3(HTTPProvider(host_address))
 
