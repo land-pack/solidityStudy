@@ -47,9 +47,11 @@ class MessageHandler(tornado.websocket.WebSocketHandler):
                 "msg_code": 1001,
                 "data":{
                     "top": lst,
-                    "lastdraw":"2|4|5|7|10",
+                    "number":"2|4|5|7|10",
+                    "last_expectid": "1803151010",
                     "expectid":"1803151010",
-                    "account":12.2
+                    "account":12.2,
+                    "timer":"58"
                 }
             }
             resp = ujson.dumps(resp)
