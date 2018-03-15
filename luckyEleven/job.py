@@ -4,16 +4,10 @@ import redis
 from tornado import ioloop
 # self config
 from config.basic import publish_channel
+from pysol.watch import watching
     
 
 r = redis.Redis()
-
-
-def hello():
-	print("hello")
-
-ioloop.PeriodicCallback(hello, 10*1000).start()
-
 
 
 def push_expect():
@@ -28,5 +22,15 @@ def push_expect():
             }
     r.publish(publish_channel, ujson.dumps(data))
 
-ioloop.PeriodicCallback(push_expect, 5*1000).start()
+
+# Watch the place event! if succesful will got a callback
+watching()
+
+
+
+# Run ever 1 minute!
+ioloop.PeriodicCallback(push_expect, 60*1000).start()
+
+
+# Engine start here
 ioloop.IOLoop.instance().start()

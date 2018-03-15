@@ -13,12 +13,18 @@ contract = w3.eth.contract(abi=abi_conf, address=addr)
 
 
 
-def transfer_callback():
-    print("Got signal")
+def transfer_callback(param):
+    print("Got signal<{}>".format(param))
 
 
 def watching():
 
-    filter_ = contract.on("placeorder", {})
-    print(dir(filter_))
-    filter_.watch(transfer_callback)
+    try:
+        contract.on("placeorder").watch(transfer_callback)
+    except:
+        raise
+    else:
+        print("Event monitor register successful!")
+
+
+
