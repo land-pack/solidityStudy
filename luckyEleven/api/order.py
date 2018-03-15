@@ -14,7 +14,7 @@ import ujson
 
 from model.order import Luckyeleven
 from pysol import rpc
-
+from config.basic import publish_channel
 
 c = tornadoredis.Client()
 c.connect()
@@ -25,10 +25,10 @@ class MainHandler(tornado.web.RequestHandler):
         self.render("template.html", title="PubSub + WebSocket Demo")
 
 
-class NewMessageHandler(tornado.web.RequestHandler):
+class TestMessageHandler(tornado.web.RequestHandler):
     def post(self):
         message = self.get_argument('message')
-        c.publish('test_channel', message)
+        c.publish(publish_channel, message)
         self.set_header('Content-Type', 'text/plain')
         self.write('place successful :)')
 
@@ -89,8 +89,43 @@ class PlaceApiHandler(tornado.web.RequestHandler):
 
         }
         self.write(ujson.dumps(resp))
-        c.publish('test_channel', ujson.dumps(tx_lst))
+        c.publish(publish_channel, ujson.dumps(tx_lst))
 
 
 
 
+class MyOrderHandler(tornado.web.RequestHandler):
+
+    def get(self):
+        """
+        
+        """
+        resp = {
+            "status": 200,
+            "message": "ok",
+            "data": {
+                "order_lst":[
+                
+                ]
+            }
+        }
+        self.write(ujson.dumps(resp))
+
+
+
+class MyInfoHandler(tornado.web.RequestHandler):
+
+    def get(self):
+        """
+        
+        """
+        resp = {
+            "status": 200,
+            "message": "ok",
+            "data": {
+                "order_lst":[
+                
+                ]
+            }
+        }
+        self.write(ujson.dumps(resp))

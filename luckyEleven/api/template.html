@@ -27,7 +27,7 @@
     <body onload="open_websocket()">
         <h1>{{ title }}</h1>
         <p>Enter your message and press the 'Send' button. You may open another browser window and send messages from here.</p>
-        <form method="POST" action="/place" target="_hidden">
+        <form method="POST" action="/test/input" target="_hidden">
         	<input name="message" style="width: 500px;border: 1px solid #CCC;padding: 3px;" value="" placeholder="Enter your message here and press the 'Send' button."/>
         	<input type="submit" value="Post"/>
         </form>

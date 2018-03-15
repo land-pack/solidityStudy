@@ -14,6 +14,7 @@ import ujson
 
 from model.order import Luckyeleven
 from pysol import rpc
+from config.basic import publish_channel
 
 
 c = tornadoredis.Client()
@@ -31,7 +32,7 @@ class MessageHandler(tornado.websocket.WebSocketHandler):
     def listen(self):
         self.client = tornadoredis.Client()
         self.client.connect()
-        yield tornado.gen.Task(self.client.subscribe, 'test_channel')
+        yield tornado.gen.Task(self.client.subscribe, publish_channel)
         self.client.listen(self.on_message)
     
     def open(self, *args, **kwargs):
@@ -45,7 +46,10 @@ class MessageHandler(tornado.websocket.WebSocketHandler):
                 "msg_type":"init",
                 "msg_code": 1001,
                 "data":{
-                    "top": lst
+                    "top": lst,
+                    "lastdraw":"2|4|5|7|10",
+                    "expectid":"1803151010",
+                    "account":12.2
                 }
             }
             resp = ujson.dumps(resp)
@@ -63,7 +67,7 @@ class MessageHandler(tornado.websocket.WebSocketHandler):
 
     def on_close(self):
         if self.client.subscribed:
-            self.client.unsubscribe('test_channel')
+            self.client.unsubscribe(publish_channel)
             self.client.disconnect()
 
     def check_origin(self, origin):
