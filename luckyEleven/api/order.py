@@ -54,7 +54,13 @@ class PlaceApiHandler(tornado.web.RequestHandler):
         self.set_header("Access-Control-Allow-Origin", "*")
         request_data  =  self.get_argument('request')
         data = ujson.loads(request_data)
-        data= data.get("sendBetArr")
+        try:
+            _data= data.get("sendBetArr")
+        except:
+            pass
+        else:
+            data = _data
+
         print("data type={}".format(type(data)))
 
         # RPC
@@ -90,6 +96,7 @@ class PlaceApiHandler(tornado.web.RequestHandler):
         }
         self.write(ujson.dumps(resp))
         c.publish(publish_channel, ujson.dumps(tx_lst))
+        print(tx_lst)
 
 
 

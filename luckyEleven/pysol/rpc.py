@@ -3,10 +3,6 @@ import json
 from web3 import Web3, HTTPProvider, IPCProvider, RPCProvider
 from web3.contract import ConciseContract
 
-#from pysol.config import host_address
-#from pysol.config import abi as abi_conf
-#from pysol.config import contract_address as addra
-
 from config.basic import host_address
 from config.basic import abi as abi_conf
 from config.basic import contract_address as addr
@@ -25,7 +21,7 @@ print("Current accounts={}".format(w3.eth.accounts[0]))
 
 
 
-def place(addr=w3.eth.accounts[0], value=0, expectid='1803141010', number=[0,1,2,3,4], gas=40000000 ):
+def place(addr=w3.eth.accounts[0], value=0, expectid='1803141010', number=[0,1,2,3,4], gas=40000000):
     """
     user address
     @param value    : float :   0.00021
@@ -33,14 +29,15 @@ def place(addr=w3.eth.accounts[0], value=0, expectid='1803141010', number=[0,1,2
     @param number   : list  :   [1,2,3,4,5]
     @param gas      : int   :   4000000
     """
-    unlock(w3)
+    #unlock(w3)
     number = [int(i) for i in number]
     value = int(value)
     #print("addr={} | value={} | expectid={} | number={} | gas={}".format(addr, value, expectid, number, gas))   
     ret = contract.transact(
-            {   'from': addr, 
+            {   'from': addr,
+                 
                 'gas': gas, 
-                'value': value
+                'value': w3.toWei(value,"ether")
             }).placeOrder(
             expectid, 
             number)

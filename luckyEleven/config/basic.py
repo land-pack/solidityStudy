@@ -4,7 +4,7 @@ publish_channel = 'MyTest'
 host_address = 'http://192.168.12.34:9585'
 
 # Configuration yourself contract address
-contract_address =  '0x9548bd8b13ceff478f16d206a4752f23579d7ac6'
+contract_address =  '0xa429da9fc022b96c0754e0d23cf61fb0a213432b'
 
 # Your ABI configration
 abi = """

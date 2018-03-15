@@ -107,6 +107,47 @@ class Luckyeleven(DBS):
         else:
             return data
     
+
+
+
+    def update_succ(self, trade_hash, blockNumber=-1, result=None):
+        """
+        If callback return with successful status
+        Will update the trade status to place successful!
+        status :
+           -1 : failure 
+            0 : pending  (default)
+            1 : success
+            2 : bingo (get prize)
+            3 : no-prize
+
+        """
+        sql_succ = """
+            UPDATE t_trade
+            SET f_status=1, f_block_id=%s
+            WHERE f_trade_addr=%s
+        """
+
+        sql_set_result = """
+            UPDATE t_trade
+            SET f_status=2, f_result=%s
+            WHERE f_trade_addr=%s
+
+        """
+
+        try:
+            if result:
+                self.cursor.execute(sql_set_result, (trade_hash, result))
+            else:
+                self.cursor.execute(sql_succ, (blockNumber, trade_hash))
+            self.db.commit()
+        except:
+            self.db.rollback()
+            raise
+        else:
+            print("Oder update successful!")
+
+            
     def top_20(self):
         sql = """
             SELECT f_user_addr as user_addr, f_expect_id as expect_id, f_lucky_num as lucky_num,
