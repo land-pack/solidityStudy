@@ -41,3 +41,10 @@ def place(addr=w3.eth.accounts[0], value=0, expectid='1803141010', number=[0,1,2
             expectid, 
             number)
     return ret
+
+
+def get_balance(addr=w3.eth.accounts[0]):
+    """
+    account addr
+    """
+    return w3.eth.getBalance(addr)

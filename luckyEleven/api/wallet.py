@@ -14,7 +14,7 @@ import ujson
 
 from model.order import Luckyeleven
 from pysol import wallet
-
+from pysol import rpc
 
 c = tornadoredis.Client()
 c.connect()
@@ -27,6 +27,7 @@ class CreateAccountHandler(tornado.web.RequestHandler):
         {"passwd":123456}
         """
         request_data = self.get_argument('request')
+        request_data = ujson.loads(request_data)
         passwd = request_data.get("passwd")
         addr = wallet.create_account(str(passwd))
         self.set_header('Content-Type', 'text/plain')
@@ -38,3 +39,32 @@ class CreateAccountHandler(tornado.web.RequestHandler):
 			}
 		}
         self.write(response)
+
+class MyAccountHandler(tornado.web.RequestHandler):
+
+    def post(self):
+        """
+        #If you have text/plain Content-Type, you should do it on the below way!
+        curl -d 'request={"user_addr":"0x6f39Bb3dA74B402f35394196e997FdB793c624f7"}'  -X POST http://127.0.0.1:8888/account/info
+        
+        #If you run the application/json Content-Type, you should do it on the following way!
+
+        """
+        print(self.request.arguments)
+        self.set_header('Content-Type', 'text/plain')
+        #self.set_header('Content-Type', 'application/json')
+        self.set_header("Access-Control-Allow-Origin", "*")
+        request_data = self.get_argument('request')
+        request_data = ujson.loads(request_data)
+        user_addr = request_data.get("user_addr")
+        account = rpc.get_balance(user_addr)
+        print(account)
+        eth_account = account /1000000
+        resp = {
+            "status": 200,
+            "message": "ok",
+            "data": {
+                "account": eth_account
+            }
+        }
+        self.write(ujson.dumps(resp))

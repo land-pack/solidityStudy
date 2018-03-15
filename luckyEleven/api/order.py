@@ -113,19 +113,4 @@ class MyOrderHandler(tornado.web.RequestHandler):
 
 
 
-class MyInfoHandler(tornado.web.RequestHandler):
 
-    def get(self):
-        """
-        
-        """
-        resp = {
-            "status": 200,
-            "message": "ok",
-            "data": {
-                "order_lst":[
-                
-                ]
-            }
-        }
-        self.write(ujson.dumps(resp))
