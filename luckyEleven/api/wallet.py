@@ -60,11 +60,14 @@ class MyAccountHandler(tornado.web.RequestHandler):
         account = rpc.get_balance(user_addr)
         print(account)
         eth_account = account /1000000
+        with Luckyeleven() as db:
+            order_lst =  db.fetch_order_by_addr(user_addr)
         resp = {
             "status": 200,
             "message": "ok",
             "data": {
-                "account": eth_account
+                "account": eth_account,
+                "order_lst": order_lst
             }
         }
         self.write(ujson.dumps(resp))

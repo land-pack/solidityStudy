@@ -147,6 +147,24 @@ class Luckyeleven(DBS):
         else:
             print("Oder update successful!")
 
+    def fetch_order_by_addr(self, addr):
+        sql = """
+            SELECT f_expect_id as expect_id, f_lucky_num as lucky_num,
+            f_digit_curreny as digit_curreny, f_result as prize_result, f_trade_addr as trade_addr,
+            f_lucky_result as lucky_result, f_create_time as place_time, f_status as status
+            FROM t_trade
+            WHERE f_user_addr=%s
+            ORDER BY f_create_time DESC 
+            LIMIT 10
+        """
+        try:
+            self.cursor.execute(sql, (addr, ))
+            data = self.cursor.fetchall()
+        except:
+            raise
+        else:
+            return data
+
             
     def top_20(self):
         sql = """
