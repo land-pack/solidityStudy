@@ -64,9 +64,13 @@ class PlaceApiHandler(tornado.web.RequestHandler):
         print("data type={}".format(type(data)))
 
         # RPC
-        tx_lst = {}
+        tx_lst = []
         
+        
+        # check luck_num
+        # TODO ...
 
+        #
         for i in data:
             order_status = 0
             with Luckyeleven() as db:
@@ -77,15 +81,19 @@ class PlaceApiHandler(tornado.web.RequestHandler):
                          0, # result
                          order_status) # status
 
-                tx_lst[tx] = {
+                
+                tmp = {
                     "place_time": str(datetime.timedelta(seconds=666)),
                     "user_addr": i.get("user_addr"),
                     "expect_id": i.get("expect_id"),
                     "lucky_num": i.get("lucky_num"),
                     "digit_curreny": i.get("digit_curreny"),
                     "prize_result": order_status,
-                    "lucky_result": "" # if value is empty, you should ignore this
+                    "lucky_result": "", # if value is empty, you should ignore this
+                    "trade_addr": tx,
+                    "status": 0 # pending ..
                 }
+                tx_lst.append(tmp)
         resp = {
                 "status": 100,
                 "message":"ok",

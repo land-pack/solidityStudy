@@ -1,4 +1,10 @@
 
+
+# std lib
+import logging
+
+
+# Tornado lib
 import tornado.httpserver
 import tornado.ioloop
 
@@ -15,6 +21,16 @@ from api.wallet import MyAccountHandler
 # For WebSocket
 from api.ws import MessageHandler
 
+
+# ============ Log configuration =========
+#handler = logging.FileHandler(log_file_filename)
+#logger.addHandler(handler)
+#logger.setLevel(logging.INFO)
+
+
+
+
+# Map api
 application = tornado.web.Application([
     (r'/', MainHandler),
     (r'/order/place', PlaceApiHandler),
