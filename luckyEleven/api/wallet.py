@@ -70,4 +70,4 @@ class MyAccountHandler(tornado.web.RequestHandler):
                 "order_lst": order_lst
             }
         }
-        self.write(ujson.dumps(resp))
+        self.write(resp)

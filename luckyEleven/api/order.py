@@ -95,14 +95,15 @@ class PlaceApiHandler(tornado.web.RequestHandler):
                 }
                 tx_lst.append(tmp)
         resp = {
-                "status": 100,
+                "status": 200,
                 "message":"ok",
                 "data":{
                     "trade_lst": tx_lst
                 }
 
         }
-        self.write(ujson.dumps(resp))
+        #self.write(ujson.dumps(resp))
+        self.write(resp)
         c.publish(publish_channel, ujson.dumps(tx_lst))
         print(tx_lst)
 
@@ -124,7 +125,7 @@ class MyOrderHandler(tornado.web.RequestHandler):
                 ]
             }
         }
-        self.write(ujson.dumps(resp))
+        self.write(resp)
 
 
 
