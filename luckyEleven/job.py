@@ -5,18 +5,21 @@ from tornado import ioloop
 # self config
 from config.basic import publish_channel
 from pysol.watch import watching
-    
+from utils.cache import set_current_expect
+
 
 r = redis.Redis()
 
 
 def push_expect():
     timeString  = time.strftime("%Y%m%d%H%M%S", time.localtime())
+    expectid = timeString[2:-2]
+    set_current_expect(expectid)
     data = {
             	"msg_type": "new",
             	"msg_code": 1002,
             	"data": {
-            		"expectid": timeString[2:-2],
+            		"expectid": expectid,
             		"timer": 60 - int(timeString[-2:])
             	}
             }

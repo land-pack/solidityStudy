@@ -6,6 +6,9 @@ from web3.contract import ConciseContract
 from config.basic import host_address
 from config.basic import abi as abi_conf
 from config.basic import contract_address as addr
+from utils.cache import top_block
+
+
 
 abi_conf = json.loads(abi_conf)
 w3 = Web3(HTTPProvider(host_address))
@@ -35,7 +38,6 @@ def place(addr=w3.eth.accounts[0], value=0, expectid='1803141010', number=[0,1,2
     #print("addr={} | value={} | expectid={} | number={} | gas={}".format(addr, value, expectid, number, gas))   
     ret = contract.transact(
             {   'from': addr,
-                 
                 'gas': gas, 
                 'value': w3.toWei(value,"ether")
             }).placeOrder(
@@ -49,3 +51,17 @@ def get_balance(addr=w3.eth.accounts[0]):
     account addr
     """
     return w3.eth.getBalance(addr)
+
+def set_win_num():
+    max_block = top_block()
+    if not max_block:
+        print("Invalid max_block")
+        return 
+    block_hash = w3.eth.getBlock(max_block)
+    contract.transact(
+            {   'from': addr,
+                'gas': gas, 
+                'value': w3.toWei(value,"ether")
+            }).setWinNumbers(max_block, block_hash)
+
+    

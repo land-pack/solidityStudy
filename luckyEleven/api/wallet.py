@@ -63,7 +63,7 @@ class MyAccountHandler(tornado.web.RequestHandler):
         with Luckyeleven() as db:
             ret =  db.fetch_order_by_addr(user_addr)
             order_lst = ret.get("data")
-            counter = ret.get("counter")
+            counter = ret.get("counter", {}).get("counter")
 
         resp = {
             "status": 200,
