@@ -61,13 +61,18 @@ class MyAccountHandler(tornado.web.RequestHandler):
         print(account)
         eth_account = account /1000000
         with Luckyeleven() as db:
-            order_lst =  db.fetch_order_by_addr(user_addr)
+            ret =  db.fetch_order_by_addr(user_addr)
+            order_lst = ret.get("data")
+            counter = ret.get("counter")
+
         resp = {
             "status": 200,
             "message": "ok",
             "data": {
-                "account": eth_account,
+                "counter": counter,
+                "account": eth_account or 0,
                 "order_lst": order_lst
             }
         }
+        #resp = ujson.dumps(resp)
         self.write(resp)

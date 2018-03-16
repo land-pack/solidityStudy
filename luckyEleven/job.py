@@ -28,8 +28,8 @@ watching()
 
 
 
-# Run ever 1 minute!
-ioloop.PeriodicCallback(push_expect, 60*1000).start()
+# Run ever 10 seconds!
+ioloop.PeriodicCallback(push_expect, 10*1000).start()
 
 
 # Engine start here

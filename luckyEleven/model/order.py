@@ -151,26 +151,41 @@ class Luckyeleven(DBS):
         sql = """
             SELECT f_expect_id as expect_id, f_lucky_num as lucky_num,
             f_digit_curreny as digit_curreny, f_result as prize_result, f_trade_addr as trade_addr,
-            f_lucky_result as lucky_result, f_create_time as place_time, f_status as status
+            f_lucky_result as lucky_result, f_status as status
             FROM t_trade
             WHERE f_user_addr=%s
             ORDER BY f_create_time DESC 
-            LIMIT 10
+            LIMIT 4
         """
+
+        check_count = """
+            SELECT count(*) as counter
+            FROM t_trade
+            WHERE f_user_addr=%s
+        """
+
+
         try:
             self.cursor.execute(sql, (addr, ))
             data = self.cursor.fetchall()
+            
+            self.cursor.execute(check_count, (addr, ))
+            counter = self.cursor.fetchone()
+
         except:
             raise
         else:
-            return data
+            return {
+                "data": data,
+                "counter": counter
+            }
 
             
     def top_20(self):
         sql = """
             SELECT f_user_addr as user_addr, f_expect_id as expect_id, f_lucky_num as lucky_num,
             f_digit_curreny as digit_curreny, f_result as prize_result, f_trade_addr as trade_addr,
-            f_lucky_result as lucky_result, f_create_time as place_time
+            f_lucky_result as lucky_result, f_create_time as place_time, f_status as status
             FROM t_trade
             ORDER BY f_create_time DESC 
             LIMIT 20

@@ -31,7 +31,7 @@ def place(addr=w3.eth.accounts[0], value=0, expectid='1803141010', number=[0,1,2
     """
     #unlock(w3)
     number = [int(i) for i in number]
-    value = int(value)
+    #value = int(value)
     #print("addr={} | value={} | expectid={} | number={} | gas={}".format(addr, value, expectid, number, gas))   
     ret = contract.transact(
             {   'from': addr,

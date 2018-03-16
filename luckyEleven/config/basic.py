@@ -1,5 +1,10 @@
 publish_channel = 'MyTest'
 
+
+# Redis host
+REDIS_PREFIX = 'blockid_{}'
+redis_host = "localhost"
+
 # Your Node IP/PORT
 host_address = 'http://192.168.12.34:9585'
 

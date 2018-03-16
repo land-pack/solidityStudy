@@ -94,18 +94,32 @@ class PlaceApiHandler(tornado.web.RequestHandler):
                     "status": 0 # pending ..
                 }
                 tx_lst.append(tmp)
-        resp = {
-                "status": 200,
-                "message":"ok",
-                "data":{
-                    "trade_lst": tx_lst
-                }
 
-        }
-        #self.write(ujson.dumps(resp))
+        print("you place length ={}".format(len(data)))
+        
+        resp = {
+                    "status": 200,
+                    "message":"ok",
+                    "data":{
+                        "trade_lst": tx_lst
+                    }
+
+            }
         self.write(resp)
-        c.publish(publish_channel, ujson.dumps(tx_lst))
-        print(tx_lst)
+
+
+        print("the length =={}".format(len(tx_lst)))
+        for i in tx_lst:
+            print(i)
+            resp = {
+                    "msg_code": 1006,
+                    "msg_type":"user_place",
+                    "data":{
+                        "trade_lst": i
+                    }
+
+            }
+            c.publish(publish_channel, ujson.dumps(resp))
 
 
 
