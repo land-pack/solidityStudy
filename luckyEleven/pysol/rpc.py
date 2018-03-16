@@ -6,8 +6,7 @@ from web3.contract import ConciseContract
 from config.basic import host_address
 from config.basic import abi as abi_conf
 from config.basic import contract_address as addr
-from utils.cache import top_block
-
+from utils.cache import top_block, get_current_expect_id
 
 
 abi_conf = json.loads(abi_conf)
@@ -52,16 +51,27 @@ def get_balance(addr=w3.eth.accounts[0]):
     """
     return w3.eth.getBalance(addr)
 
-def set_win_num():
-    max_block = top_block()
+def get_prize_num(expectid=None, addr=w3.eth.accounts[0], gas=400000000):
+
+    print("addr -->{}".format(addr))
+    max_block = top_block() or 10385
     if not max_block:
         print("Invalid max_block")
         return 
-    block_hash = w3.eth.getBlock(max_block)
-    contract.transact(
+
+    print("max_block num={}".format(max_block))
+    block_obj = w3.eth.getBlock(max_block)
+    print("block_obj={}".format(block_obj))
+    block_hash =  block_obj.get("hash")
+
+    print("block_hash={}".format(block_hash))
+    exp = expectid if expectid else get_current_expect_id()
+    return contract.transact(
             {   'from': addr,
                 'gas': gas, 
-                'value': w3.toWei(value,"ether")
-            }).setWinNumbers(max_block, block_hash)
+            }).setWinNumbers(exp, str(block_hash))
 
-    
+
+def get_number(expectid=0):
+    ep=contract.call().getWinNumbers(expectid)
+    print(ep)

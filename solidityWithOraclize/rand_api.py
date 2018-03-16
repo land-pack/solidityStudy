@@ -8,9 +8,11 @@ app = Flask(__name__)
 
 @app.route('/hello', methods = ['GET'])
 def api_hello():
+    rand_number = random.sample([1,2,3,4,5,6,7,8,9,10], 4)
+    print 'generate a rand number ==>', rand_number
     data = {
         'name'  : 'lottery',
-        'number' : random.sample([1,2,3,4,5,6,7,8,9,10], 4)
+        'number' : '-'.join([str(i) for i in rand_number])
     }
     js = json.dumps(data)
 

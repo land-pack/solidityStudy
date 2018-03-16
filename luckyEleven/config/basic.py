@@ -2,7 +2,11 @@ publish_channel = 'MyTest'
 
 
 # Redis host
-REDIS_PREFIX = 'blockid_{}'
+REDIS_PREFIX = 'ak_prefix_{}'
+REDIS_ORDER_BLOCK = 'ak_order_block_{}'
+REDIS_EXPECT_ORDER = 'ak_expect_order_{}'
+REDIS_CLOCK_FLAG = 'ak_clock_flag_{}' # default 60 seconds
+
 redis_host = "localhost"
 
 # Your Node IP/PORT

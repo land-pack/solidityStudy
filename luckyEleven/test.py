@@ -1,8 +1,8 @@
 #from pysol.wallet import create_account
 #from pysol.watch import watching
 #from pysol.rpc import get_balance
-from pysol.rpc import set_win_num
-
+from pysol.rpc import get_number
+from pysol.rpc import get_prize_num
 
 # Test model
 #from model.order import Luckyeleven
@@ -41,3 +41,7 @@ if __name__ == '__main__':
     pop_by_hx(1001, 13)
     print(left_hx(1001))
     print(is_finish_order(1001))
+
+
+    get_prize_num('1803161918')
+    get_number('1803161918')

@@ -8,6 +8,7 @@ except:
     import _mysql as DBMS
 
 from pysol import rpc
+from utils.cache import push_user_place_hash, pop_by_hx, get_current_expect_id
 
 class DBS(object):
 
@@ -83,6 +84,7 @@ class Luckyeleven(DBS):
             tx = rpc.place(f_user_addr, f_digit_curreny, f_expect_id, number)
             self.cursor.execute(sql, (f_user_addr, f_expect_id, f_lucky_num,
                 f_digit_curreny, f_result, f_status, tx))
+            push_user_place_hash(f_expect_id, tx)
             self.db.commit()
         except:
             # Rollback  in case there is any error
@@ -135,10 +137,12 @@ class Luckyeleven(DBS):
 
         """
 
+        current_expect_id = get_current_expect_id()
         try:
             if result:
                 self.cursor.execute(sql_set_result, (trade_hash, result))
             else:
+                push_user_place_hash(current_expect_id, trade_hash)
                 self.cursor.execute(sql_succ, (blockNumber, trade_hash))
             self.db.commit()
         except:
