@@ -23,7 +23,7 @@ print("Current accounts={}".format(w3.eth.accounts[0]))
 
 
 
-def place(addr=w3.eth.accounts[0], value=0, expectid='1803141010', number=[0,1,2,3,4], gas=40000000):
+def place(addr=w3.eth.accounts[0], value=0, expectid='1803141010', number=[0,1,2,3,4], gas=4000000):
     """
     user address
     @param value    : float :   0.00021
@@ -31,7 +31,7 @@ def place(addr=w3.eth.accounts[0], value=0, expectid='1803141010', number=[0,1,2
     @param number   : list  :   [1,2,3,4,5]
     @param gas      : int   :   4000000
     """
-    #unlock(w3)
+    unlock(w3)
     number = [int(i) for i in number]
     #value = int(value)
     #print("addr={} | value={} | expectid={} | number={} | gas={}".format(addr, value, expectid, number, gas))   
@@ -51,7 +51,7 @@ def get_balance(addr=w3.eth.accounts[0]):
     """
     return w3.eth.getBalance(addr)
 
-def get_prize_num(expectid=None, addr=w3.eth.accounts[0], gas=400000000):
+def submit_block_hash(expectid=None, addr=w3.eth.accounts[0], gas=4000000):
 
     print("addr -->{}".format(addr))
     max_block = top_block() or 10385
@@ -72,6 +72,6 @@ def get_prize_num(expectid=None, addr=w3.eth.accounts[0], gas=400000000):
             }).setWinNumbers(exp, str(block_hash))
 
 
-def get_number(expectid=0):
+def get_result_num(expectid=0):
     ep=contract.call().getWinNumbers(expectid)
     print(ep)

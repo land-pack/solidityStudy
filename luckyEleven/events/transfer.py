@@ -4,7 +4,7 @@ from utils.cache import push_block
 from utils.cache import get_current_expect_id
 from utils.cache import is_finish_order
 from utils.cache import is_current_time_over
-from pysol.rpc import get_prize_num
+from pysol.rpc import submit_block_hash
 
 
 def transfer_callback(param):
@@ -29,14 +29,14 @@ def transfer_callback(param):
     current_expect_id =  get_current_expect_id()
     push_block(current_expect_id, blockNumber)
     
-    p_num =  get_prize_num()
+    p_num =  submit_block_hash()
     print("Prize number is ===>{}".format(p_num))
     
     
-    if is_finish_order(current_expect_id) and is_finish_order(current_expect_id):
+    if is_finish_order(current_expect_id) and is_current_time_over(current_expect_id):
         """
         If current expect has finish all order!
         and we can open prize
         """
-        p_num =  get_prize_num()
+        p_num =  submit_block_hash()
         print("Prize number is ===>{}".format(p_num))
